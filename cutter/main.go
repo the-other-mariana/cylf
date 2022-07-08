@@ -36,7 +36,7 @@ func main(){
 		extension := nameParts[len(nameParts) - 1]
 
 		// create file in disk
-		newFile := filename + "_" + strconv.FormatUint(i, 10)
+		newFile := filename + "_" + strconv.FormatUint(i, 10) + ".cylf"
 		_, err := os.Create(newFile)
 
 		if err != nil {
@@ -48,4 +48,5 @@ func main(){
 		ioutil.WriteFile(newFile, currBuffer, os.ModeAppend)
 		fmt.Println("[SUCCESS] Piece: %v", newFile)
 	}
+	fmt.Println("[SUCCESS] file cut successfully")
 }
