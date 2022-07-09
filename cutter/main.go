@@ -7,12 +7,19 @@ import(
 	"strconv"
 	"os"
 	"strings"
+	"flag"
 )
 
 func main(){
+	// input flags: file size limit, filename
+	mb := flag.Int("n", 10, "limit file size (MB)")
+	var name string
+	flag.StringVar(&name, "f", "default", "filename to cut")
+	flag.Parse()
+
 	pwd, _ := os.Getwd()
-	targetFile := pwd + "/seberg-2019.mp4"
-	fmt.Printf("file: %v", targetFile)
+	targetFile := pwd + "/" + name
+	fmt.Printf("file: %v\n", targetFile)
 
 	
 	file, err := os.Open(targetFile)
@@ -25,13 +32,13 @@ func main(){
 
 	fileInfo, _ := file.Stat()
 	var fileSize int64 = fileInfo.Size()
-	const pieceSize = 95 * (1 << 20) // 99 MB
+	var pieceSize = uint64(*mb) * (1 << 20) 
 
 	numberOfPieces := uint64(math.Ceil(float64(fileSize) / float64(pieceSize)))
 	fmt.Printf("[PROMPT] File will be cut into: %d pieces with size: %d bytes\n", numberOfPieces, pieceSize)
 	
 	for i := uint64(0); i < numberOfPieces; i++ {
-		currSize := int(math.Min(pieceSize, float64(fileSize-int64(i*pieceSize))))
+		currSize := int(math.Min(float64(pieceSize), float64(fileSize-int64(i*pieceSize))))
         currBuffer := make([]byte, currSize)
 		file.Read(currBuffer)
 
@@ -50,7 +57,7 @@ func main(){
 
 		// save buffer bytes into the created file
 		ioutil.WriteFile(newFile, currBuffer, os.ModeAppend)
-		fmt.Printf("[SUCCESS] Piece: %v\n", newFile)
+		fmt.Printf("[SUCCESS] Piece %v/%v: %v\n", i+1, numberOfPieces, newFile)
 	}
-	fmt.Println("[SUCCESS] file cut successfully")
+	fmt.Println("[SUCCESS] File cut successfully")
 }
