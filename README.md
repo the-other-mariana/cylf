@@ -15,8 +15,14 @@ export GO111MODULE=off
 ```
 
 
-then, go to `cutter/` folder if you want to split a file or to `merger/` folder if you have a bunch of `.cylf` files you want to merge back, and type on the terminal:
+then, go to `cutter/` folder if you want to split a file, and type:
 
 ```
-go run main.go
+go run main.go -n 95 -f seberg-2019.mp4
+```
+
+or to `merger/` folder if you have a bunch of `.cylf` files you want to merge back, and type:
+
+```
+go run main.go -f seberg-2019.mp4
 ```
