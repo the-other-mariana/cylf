@@ -24,5 +24,5 @@ go run main.go -n 95 -f seberg-2019.mp4
 or to `merger/` folder if you have a bunch of `.cylf` files you want to merge back, and type:
 
 ```
-go run main.go -f seberg-2019.mp4
+go run main.go -i seberg-2019 -f seberg-2019.mp4
 ```
