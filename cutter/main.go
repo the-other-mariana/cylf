@@ -36,18 +36,23 @@ func main(){
 
 	numberOfPieces := uint64(math.Ceil(float64(fileSize) / float64(pieceSize)))
 	fmt.Printf("[PROMPT] File will be cut into: %d pieces with size: %d bytes\n", numberOfPieces, pieceSize)
+
+	// create folder
+	folderParts := strings.Split(name, ".")
+	folderName := folderParts[len(folderParts) - 2]
+	err = os.Mkdir(folderName, 0755)
+	if err != nil {
+		fmt.Printf("[ERROR] %v\n", err)
+		os.Exit(1)
+	}
 	
 	for i := uint64(0); i < numberOfPieces; i++ {
 		currSize := int(math.Min(float64(pieceSize), float64(fileSize-int64(i*pieceSize))))
         currBuffer := make([]byte, currSize)
 		file.Read(currBuffer)
 
-		nameParts := strings.Split(targetFile, ".")
-		filename := nameParts[len(nameParts) - 2]
-		//extension := nameParts[len(nameParts) - 1]
-
 		// create file in disk
-		newFile := filename + "_" + strconv.FormatUint(i, 10) + ".cylf"
+		newFile := pwd + "/" + folderName + "/" + folderName + "_" + strconv.FormatUint(i, 10) + ".cylf"
 		_, err := os.Create(newFile)
 
 		if err != nil {
