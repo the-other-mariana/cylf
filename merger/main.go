@@ -11,12 +11,14 @@ import (
 
 func main(){
 	var name string
+	var folder string
 	flag.StringVar(&name, "f", "default", "filename to merge")
+	flag.StringVar(&folder, "i", "default", "folder where file parts are")
 	flag.Parse()
 
 	nameParts := strings.Split(name, ".")
 	filename := nameParts[len(nameParts) - 2]
-	baseFilename := "../cutter/" + filename
+	baseFilename := "../cutter/" + folder + "/" + filename
 	extension := nameParts[len(nameParts) - 1]
 	fmt.Printf("file: %v\n", baseFilename)
 
