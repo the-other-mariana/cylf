@@ -26,3 +26,5 @@ or to `merger/` folder if you have a bunch of `.cylf` files you want to merge ba
 ```
 go run merger.go -i seberg-2019 -f seberg-2019.mp4
 ```
+
+![img](res/sc-v1.png)

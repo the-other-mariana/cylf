@@ -20,11 +20,15 @@ func main(){
 	filename := nameParts[len(nameParts) - 2]
 	baseFilename := "./" + folder + "/" + filename
 	extension := nameParts[len(nameParts) - 1]
-	fmt.Printf("file: %v\n", baseFilename)
+	fmt.Printf("file: %v-merged.%v\n", baseFilename, extension)
 
 	mergedFile := "./" + filename + "-merged"+ "." + extension
 
-	numberOfPieces := uint64(9)
+	//numberOfPieces := uint64(9)
+	pieces,_ := ioutil.ReadDir("./" + folder)
+    fmt.Printf("Files found: %v\n", len(pieces))
+	numberOfPieces := uint64(len(pieces))
+
 	var curr []byte
 	for i := uint64(0); i < numberOfPieces; i++ {
 		currFile := baseFilename + "_" + strconv.FormatUint(i, 10) + ".cylf"
