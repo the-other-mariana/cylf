@@ -18,7 +18,7 @@ func main(){
 
 	nameParts := strings.Split(name, ".")
 	filename := nameParts[len(nameParts) - 2]
-	baseFilename := "../cutter/" + folder + "/" + filename
+	baseFilename := "./" + folder + "/" + filename
 	extension := nameParts[len(nameParts) - 1]
 	fmt.Printf("file: %v\n", baseFilename)
 
