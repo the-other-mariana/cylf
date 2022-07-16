@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"io/ioutil"
+	"path/filepath"
 )
 
 func main(){
@@ -20,13 +21,15 @@ func main(){
 	filename := nameParts[len(nameParts) - 2]
 	baseFilename := "./" + folder + "/" + filename
 	extension := nameParts[len(nameParts) - 1]
-	fmt.Printf("file: %v-merged.%v\n", baseFilename, extension)
+	fmt.Printf("[PROMPT] File: %v-merged.%v\n", baseFilename, extension)
 
 	mergedFile := "./" + filename + "-merged"+ "." + extension
 
 	//numberOfPieces := uint64(9)
-	pieces,_ := ioutil.ReadDir("./" + folder)
-    fmt.Printf("Files found: %v\n", len(pieces))
+	//pieces,_ := ioutil.ReadDir("./" + folder)
+	pattern := filepath.Join("./" + folder, "*.cylf")
+	pieces, _ := filepath.Glob(pattern)
+    fmt.Printf("[SUCCESS] Files found: %v\n", len(pieces))
 	numberOfPieces := uint64(len(pieces))
 
 	var curr []byte
