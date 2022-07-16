@@ -25,8 +25,6 @@ func main(){
 
 	mergedFile := "./" + filename + "-merged"+ "." + extension
 
-	//numberOfPieces := uint64(9)
-	//pieces,_ := ioutil.ReadDir("./" + folder)
 	pattern := filepath.Join("./" + folder, "*.cylf")
 	pieces, _ := filepath.Glob(pattern)
     fmt.Printf("[SUCCESS] Files found: %v\n", len(pieces))

@@ -14,8 +14,9 @@ Open a terminal and type:
 export GO111MODULE=off
 ```
 
+in order to avoid error messages such as *package XXX is not in GOROOT" when building a Go project* or similar.
 
-then, go to `cutter/` folder if you want to split a file, and type:
+Then, go to `cutter/` folder if you want to split a file, and type:
 
 ```
 go run cutter.go -n 95 -f seberg-2019.mp4
