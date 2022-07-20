@@ -1,10 +1,32 @@
 # cylf
 
-cylf will cut your files into binary chunks that can be re-merged together using only the name of the original file. 
+**`cylf`** will cut your files into binary chunks that can be re-merged together using only the name of the original file. 
 
-- This comes in handy when a host has file size limit in the files you upload, so with cylf you cut them so that you can upload and download them somewhere else, and then use cylf again to merge back the downloaded files into 1 file on your machine!
+> This comes in handy when a hosting service has file size limit in the files you upload: with cylf you cut them following the size limit so that upload is allowed, and then in any desired machine you dowload those pieces and merge them using cylf again!
 
-# Run The Code
+# Run The Executables
+
+- Inside `bin/` folder, you will find the folders that hold the two executables (cutter + merger) of the program. Currently **`cylf`** is available for:
+
+    - Linux Ubuntu
+
+    - Windows 10
+
+- Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
+
+```
+./cutter -n 95 -f seberg-2019.mp4
+```
+
+or 
+
+```
+./merger -i seberg-2019 -f seberg-2019.mp4
+```
+
+depending on the action you want to do.
+
+# Run The Source Code
 
 - Go Version: `go1.18.3 linux/amd64`
 
@@ -29,3 +51,11 @@ go run merger.go -i seberg-2019 -f seberg-2019.mp4
 ```
 
 ![img](res/sc-v1.png)
+
+### To Cross Compile (Linux -> Win10)
+
+Type on the terminal:
+
+```
+GOOS=windows GOARCH=amd64 go build cutter.go
+```
