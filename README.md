@@ -12,7 +12,9 @@
 
     - Windows 10
 
-- Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
+## Linux
+
+Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
 
 ```
 ./cutter -n 95 -f seberg-2019.mp4
@@ -22,6 +24,22 @@ or
 
 ```
 ./merger -i seberg-2019 -f seberg-2019.mp4
+```
+
+depending on the action you want to do.
+
+## Windows 10
+
+Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
+
+```
+start cutter.exe -n 95 -f seberg-2019.mp4
+```
+
+or 
+
+```
+start merger -i seberg-2019 -f seberg-2019.mp4
 ```
 
 depending on the action you want to do.
