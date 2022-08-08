@@ -17,13 +17,13 @@
 Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
 
 ```
-./cutter -n 95 -f seberg-2019.mp4
+./cutter -n 95 -f <FILE_NAME.EXT>
 ```
 
 or 
 
 ```
-./merger -i seberg-2019 -f seberg-2019.mp4
+./merger -i <FOLDER_NAME_WITH_PARTS> -f <OUT_FILE_NAME.EXT>
 ```
 
 depending on the action you want to do.
@@ -33,13 +33,13 @@ depending on the action you want to do.
 Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
 
 ```
-start cutter.exe -n 95 -f seberg-2019.mp4
+start cutter.exe -n 95 -f <FILE_NAME.EXT>
 ```
 
 or 
 
 ```
-start merger -i seberg-2019 -f seberg-2019.mp4
+start merger -i <FOLDER_NAME_WITH_PARTS> -f <OUT_FILE_NAME.EXT>
 ```
 
 depending on the action you want to do.
