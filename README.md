@@ -26,7 +26,7 @@ or
 ./merger -i <FOLDER_NAME_WITH_PARTS> -f <OUT_FILE_NAME.EXT>
 ```
 
-depending on the action you want to do.
+depending on the action you want to do. Notice that `<FOLDER_NAME_WITH_PARTS>` is just the name of the folder, not the path.
 
 ## Windows 10
 
