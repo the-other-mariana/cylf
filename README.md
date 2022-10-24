@@ -33,13 +33,13 @@ depending on the action you want to do. Notice that `<FOLDER_NAME_WITH_PARTS>` i
 Open a terminal, go to the directory where the two executables and all the input files are located correctly, and type:
 
 ```
-start cylf.exe -a cut -n 95 -f seberg-2019.mp4
+start cylf.exe -a cut -n 95 -f <FILE_NAME.EXT>
 ```
 
 or 
 
 ```
-start cylf.exe -a merge -i seberg-2019 -f seberg-2019.mp4
+start cylf.exe -a merge -i <FOLDER_WITH_PARTS> -f <OUT_FILE_NAME.EXT>
 ```
 
 depending on the action you want to do.
@@ -59,13 +59,13 @@ in order to avoid error messages such as *package XXX is not in GOROOT* or simil
 Then, type:
 
 ```
-go run cylf.go -a cut -n 95 -f <FILENAME.EXT>
+go run cylf.go -a cut -n 95 -f <FILE_NAME.EXT>
 ```
 
 or
 
 ```
-go run cylf.go -a merge -i <FOLDER_NAME_WITH_PARTS> -f <OUT_FILENAME.EXT>
+go run cylf.go -a merge -i <FOLDER_NAME_WITH_PARTS> -f <OUT_FILE_NAME.EXT>
 ```
 
 depending on the action you want to do
