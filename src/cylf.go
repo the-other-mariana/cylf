@@ -81,7 +81,22 @@ func merge(name, folder string){
 	numberOfPieces := uint64(len(pieces))
 
 	// variable to store the accumulated bytes of every piece processed
-	var curr []byte
+	var accSize int64 = 0
+	//var curr []byte
+	for i := uint64(0); i < numberOfPieces; i++ {
+		currFile := baseFilename + "_" + strconv.FormatUint(i, 10) + ".cylf"
+		file, err := os.Open(currFile)
+		fileInfo, _ := file.Stat()
+		accSize += fileInfo.Size()
+		if err != nil {
+			fmt.Printf("[ERROR] %v\n", err)
+			os.Exit(1)
+		}
+		defer file.Close()
+		
+	}
+	bArray := make([]byte, accSize, accSize)
+	var t int64 = 0
 	for i := uint64(0); i < numberOfPieces; i++ {
 		currFile := baseFilename + "_" + strconv.FormatUint(i, 10) + ".cylf"
 		file, err := os.Open(currFile)
@@ -95,13 +110,12 @@ func merge(name, folder string){
 			os.Exit(1)
 		}
 		defer file.Close()
-		// append each byte in the variable that has all accumulated byte array
-		for j:=0; j < len(b); j++ {
-			curr = append(curr, b[j])
-		}
+		//bArray[t:t+fileSize] = ([]byte)b
+		copy(bArray[t:t+fileSize], b)
+		t += fileSize
 	}
 	// store the accumulated bytes into a file
-	err := ioutil.WriteFile(mergedFile, curr, 0644)
+	err := ioutil.WriteFile(mergedFile, bArray, 0644)
 	if err != nil {
 		fmt.Printf("[ERROR] %v\n", err)
 		os.Exit(1)
