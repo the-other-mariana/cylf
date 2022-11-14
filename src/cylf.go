@@ -102,16 +102,14 @@ func merge(name, folder string){
 		file, err := os.Open(currFile)
 		fileInfo, _ := file.Stat()
 		var fileSize int64 = fileInfo.Size()
-		b := make([]byte, fileSize)
+		//b := make([]byte, fileSize)
 		// send byte array of current file to b variable
-		file.Read(b)
+		file.Read(bArray[t:t+fileSize])
 		if err != nil {
 			fmt.Printf("[ERROR] %v\n", err)
 			os.Exit(1)
 		}
 		defer file.Close()
-		//bArray[t:t+fileSize] = ([]byte)b
-		copy(bArray[t:t+fileSize], b)
 		t += fileSize
 	}
 	// store the accumulated bytes into a file
