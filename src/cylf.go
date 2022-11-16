@@ -69,6 +69,7 @@ func merge(name, folder string){
 	fmt.Println("[RESOURCES]")
 	fmt.Println("Start Memory:")
 	mem.PrintMemUsage()
+
 	nameParts := strings.Split(name, ".")
 	filename := nameParts[len(nameParts) - 2]
 	baseFilename := "./" + folder + "/" + filename
@@ -84,24 +85,8 @@ func merge(name, folder string){
 	fmt.Printf("[SUCCESS] Files found: %v\n", len(pieces))
 	numberOfPieces := uint64(len(pieces))
 
-	// variable to store the accumulated bytes of every piece processed
-	var accSize int64 = 0
-	//var curr []byte
 	for i := uint64(0); i < numberOfPieces; i++ {
-		currFile := baseFilename + "_" + strconv.FormatUint(i, 10) + ".cylf"
-		file, err := os.Open(currFile)
-		fileInfo, _ := file.Stat()
-		accSize += fileInfo.Size()
-		if err != nil {
-			fmt.Printf("[ERROR] %v\n", err)
-			os.Exit(1)
-		}
-		defer file.Close()
-		
-	}
-	//bArray := make([]byte, accSize, accSize)
-	var t int64 = 0
-	for i := uint64(0); i < numberOfPieces; i++ {
+		// open the current file piece
 		currFile := baseFilename + "_" + strconv.FormatUint(i, 10) + ".cylf"
 		file, err := os.Open(currFile)
 		if err != nil {
@@ -111,35 +96,29 @@ func merge(name, folder string){
 		defer file.Close()
 		fileInfo, _ := file.Stat()
 		var fileSize int64 = fileInfo.Size()
-		//b := make([]byte, fileSize)
-		// send byte array of current file to b variable
-		//file.Read(bArray[t:t+fileSize])
+		// byte array variable to store file
 		b := make([]byte, fileSize)
-		// send byte array of current file to b variable
+		// store byte array of current file in b variable to convert file to []byte
 		file.Read(b)
+		// open the final file to append b bytes
 		f, err := os.OpenFile(mergedFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
-			fmt.Println(err)
-			return
+			fmt.Printf("[ERROR] %v\n", err)
+			os.Exit(1)
 		}
 		defer f.Close()
+		// append b bytes to final file
 		_, err1 := f.Write(b)
 		if err1 != nil {
-			fmt.Println(err1)
-			return
+			fmt.Printf("[ERROR] %v\n", err1)
+			os.Exit(1)
 		}
-		t += fileSize
+		// remove b pointer so that garbage collector remove it from heap
+		b = nil
 		mem.PrintMemUsage()
 	}
-	// store the accumulated bytes into a file
-	//err := ioutil.WriteFile(mergedFile, bArray, 0644)
 	fmt.Println("End Memory:")
 	mem.PrintMemUsage()
-	/*
-	if err != nil {
-		fmt.Printf("[ERROR] %v\n", err)
-		os.Exit(1)
-	}*/
 }
 
 func main(){
