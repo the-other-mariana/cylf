@@ -1,0 +1,16 @@
+[RESOURCES]
+Start Memory:
+Alloc = 0 MiB	TotalAlloc = 0 MiB	Sys = 8 MiB	NumGC = 0
+[PROMPT] File: ./seberg-2019/seberg-2019-merged.mp4
+[SUCCESS] Files found: 9
+Alloc = 441 MiB	TotalAlloc = 681 MiB	Sys = 583 MiB	NumGC = 4
+Alloc = 625 MiB	TotalAlloc = 1336 MiB	Sys = 1014 MiB	NumGC = 7
+Alloc = 1007 MiB	TotalAlloc = 1718 MiB	Sys = 1312 MiB	NumGC = 7
+Alloc = 1188 MiB	TotalAlloc = 2620 MiB	Sys = 1684 MiB	NumGC = 8
+Alloc = 1103 MiB	TotalAlloc = 3275 MiB	Sys = 1684 MiB	NumGC = 10
+Alloc = 1355 MiB	TotalAlloc = 4071 MiB	Sys = 2411 MiB	NumGC = 11
+Alloc = 1450 MiB	TotalAlloc = 4166 MiB	Sys = 2411 MiB	NumGC = 11
+Alloc = 1670 MiB	TotalAlloc = 5136 MiB	Sys = 3316 MiB	NumGC = 12
+Alloc = 1677 MiB	TotalAlloc = 5143 MiB	Sys = 3316 MiB	NumGC = 12
+End Memory:
+Alloc = 1677 MiB	TotalAlloc = 5143 MiB	Sys = 3316 MiB	NumGC = 12
