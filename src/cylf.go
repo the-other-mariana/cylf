@@ -99,32 +99,47 @@ func merge(name, folder string){
 		defer file.Close()
 		
 	}
-	bArray := make([]byte, accSize, accSize)
+	//bArray := make([]byte, accSize, accSize)
 	var t int64 = 0
 	for i := uint64(0); i < numberOfPieces; i++ {
 		currFile := baseFilename + "_" + strconv.FormatUint(i, 10) + ".cylf"
 		file, err := os.Open(currFile)
-		fileInfo, _ := file.Stat()
-		var fileSize int64 = fileInfo.Size()
-		//b := make([]byte, fileSize)
-		// send byte array of current file to b variable
-		file.Read(bArray[t:t+fileSize])
 		if err != nil {
 			fmt.Printf("[ERROR] %v\n", err)
 			os.Exit(1)
 		}
 		defer file.Close()
+		fileInfo, _ := file.Stat()
+		var fileSize int64 = fileInfo.Size()
+		//b := make([]byte, fileSize)
+		// send byte array of current file to b variable
+		//file.Read(bArray[t:t+fileSize])
+		b := make([]byte, fileSize)
+		// send byte array of current file to b variable
+		file.Read(b)
+		f, err := os.OpenFile(mergedFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer f.Close()
+		_, err1 := f.Write(b)
+		if err1 != nil {
+			fmt.Println(err1)
+			return
+		}
 		t += fileSize
 		mem.PrintMemUsage()
 	}
 	// store the accumulated bytes into a file
-	err := ioutil.WriteFile(mergedFile, bArray, 0644)
+	//err := ioutil.WriteFile(mergedFile, bArray, 0644)
 	fmt.Println("End Memory:")
 	mem.PrintMemUsage()
+	/*
 	if err != nil {
 		fmt.Printf("[ERROR] %v\n", err)
 		os.Exit(1)
-	}
+	}*/
 }
 
 func main(){
