@@ -1,0 +1,16 @@
+[RESOURCES]
+Start Memory:
+Alloc = 0 MiB | 0.00 MB	TotalAlloc = 0 MiB | 0.00 MB	Sys = 8 MiB | 8.39 MB	NumGC = 0 | 0.00 MB
+[PROMPT] File: ./seberg-2019/seberg-2019-merged.mp4
+[SUCCESS] Files found: 9
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 95 MiB | 99.65 MB	Sys = 108 MiB | 113.29 MB	NumGC = 1 | 1.05 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 190 MiB | 199.31 MB	Sys = 209 MiB | 219.24 MB	NumGC = 2 | 2.10 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 285 MiB | 298.96 MB	Sys = 209 MiB | 219.24 MB	NumGC = 3 | 3.15 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 380 MiB | 398.62 MB	Sys = 209 MiB | 219.24 MB	NumGC = 4 | 4.20 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 475 MiB | 498.27 MB	Sys = 209 MiB | 219.24 MB	NumGC = 5 | 5.24 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 570 MiB | 597.93 MB	Sys = 209 MiB | 219.24 MB	NumGC = 6 | 6.29 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 665 MiB | 697.58 MB	Sys = 209 MiB | 219.24 MB	NumGC = 7 | 7.34 MB
+Alloc = 95 MiB | 99.65 MB	TotalAlloc = 760 MiB | 797.24 MB	Sys = 209 MiB | 219.24 MB	NumGC = 8 | 8.39 MB
+Alloc = 101 MiB | 105.95 MB	TotalAlloc = 766 MiB | 803.53 MB	Sys = 209 MiB | 219.24 MB	NumGC = 8 | 8.39 MB
+End Memory:
+Alloc = 101 MiB | 105.95 MB	TotalAlloc = 766 MiB | 803.53 MB	Sys = 209 MiB | 219.24 MB	NumGC = 8 | 8.39 MB
