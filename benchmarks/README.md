@@ -59,9 +59,51 @@ $$
 C' += \frac{(C' + 3\times256)}{4}
 $$
 
-which is intended to make a 'smooth' transition between the 2x growth for small slices to 1.25x growth for big slices.
+which is intended to make a 'smooth' transition between the 2x growth for small slices to 1.25x growth for big slices. This smooth transition can be seen in the picture below, where the starting point is a capacity of 256, for which the equation above would compute:
 
-Once the algorithm gets the final new capacity $C'$, a new, larger array is allocated with this capacity, the old one is copied using `copy()` and you are handed a slice pointing to the larger copy.
+$$
+C' = C' + \frac{(C' + 3\times256)}{4} = 256 + \frac{256}{4} + \frac{3(256)}{4} = 256 + \frac{4(256)}{4} = 256 + 256
+$$
+
+which is a growth factor of 2.0, considering the initial capacity of 256 and the new capacity as 512. For a large capacity, say 8192, the computation looks as:
+
+$$
+C' = C' + \frac{(C' + 3\times256)}{4} = 8192 + \frac{8192}{4} + \frac{3(256)}{4} = 8192 + 2240,
+$$
+
+meaning we got a total new capacity of 10432, for which the initial capacity was 8192, the growth factor (10432 / 8192) is 1.2734375. Thus, below the plot shows the factor for each initial capacity, starting from the aforementioned 256 and ending in 8192.
+
+![Image](factor.png)
+
+Once the algorithm gets the final new capacity $C'$, a new, larger array is allocated with this capacity, the old one is copied using `copy()` and you are handed a slice pointing to the larger copy. The `copy()` function works as follows for an original slice called `t`:
+
+```go
+for i := range s {
+    t[i] = s[i]
+}
+s = t
+```
+
+To increase the capacity of a slice one must create a new, larger slice and copy the contents of the original slice into it. We append elements to the end of a slice following the logic:
+
+```go
+func AppendByte(slice []byte, data ...byte) []byte {
+    m := len(slice)
+    n := m + len(data)
+    // if we need to reallocate a bigger array:
+    if n > cap(slice) { // if necessary, reallocate
+        // allocate with C' as capacity
+        newSlice := make([]byte, C_prime)
+        // copy the slice elements to the new bigger one
+        copy(newSlice, slice)
+        slice = newSlice
+    }
+    slice = slice[0:n]
+    // finally, append the new data
+    copy(slice[m:n], data)
+    return slice
+}
+```
 
 ## Handy Links
 
