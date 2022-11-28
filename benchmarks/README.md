@@ -105,6 +105,12 @@ func AppendByte(slice []byte, data ...byte) []byte {
 }
 ```
 
+## Allocated Memory Usage Comparison 
+
+If we record each original file's part processing accross the different version of **`cylf`** we get the following plots:
+
+![img](mem-plot.png)
+
 ## Handy Links
 
 - https://stackoverflow.com/questions/25212260/out-growing-slice-and-underlying-array
