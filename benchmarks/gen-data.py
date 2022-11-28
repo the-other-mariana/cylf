@@ -16,6 +16,8 @@ def check_distances(x, y, text_pos):
 c = 256
 c_old = 256
 limit = 8192
+minf = 1.25
+maxf = 2.0
 
 xs = []
 ys = []
@@ -27,11 +29,16 @@ for i in range(c_old, limit + 1, 16):
     ys.append(factor)
     print(f"c = {i}, acc = {acc}, factor = {factor}")
 
+fig = plt.figure(figsize=(6,4))
+plt.title('Growth factor')
 plt.plot(xs, ys)
+plt.plot([c_old, limit], [minf, minf], ls='dashed')
+plt.ylabel('Growth factor')
+plt.xlabel('Slice length')
 plt.grid(True)
 
-#plt.savefig('factor.png', dpi=500)
-#plt.show()
+plt.savefig('factor.png', dpi=500)
+plt.show()
 
 sep = 'Alloc'
 
@@ -99,5 +106,5 @@ for p in range(2):
 
 print(text_pos)
 figs.tight_layout()
-plt.savefig('mem-plot.png', dpi=500)
+#plt.savefig('mem-plot.png', dpi=500)
 plt.show()
