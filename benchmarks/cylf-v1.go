@@ -71,6 +71,7 @@ func merge(name, folder string){
 	fmt.Println("[RESOURCES]")
 	fmt.Println("Start Memory:")
 	mem.PrintMemUsage()
+	mem.PrintSliceInfo(nil)
 	nameParts := strings.Split(name, ".")
 	filename := nameParts[len(nameParts) - 2]
 	baseFilename := "./" + folder + "/" + filename
@@ -106,11 +107,13 @@ func merge(name, folder string){
 			curr = append(curr, b[j])
 		}
 		mem.PrintMemUsage()
+		mem.PrintSliceInfo(curr)
 	}
 	// store the accumulated bytes into a file
 	err := ioutil.WriteFile(mergedFile, curr, 0644)
 	fmt.Println("End Memory:")
 	mem.PrintMemUsage()
+	mem.PrintSliceInfo(curr)
 	if err != nil {
 		fmt.Printf("[ERROR] %v\n", err)
 		os.Exit(1)

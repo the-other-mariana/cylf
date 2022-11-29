@@ -9,6 +9,7 @@ import(
 	"strings"
 	"flag"
 	"path/filepath"
+	"./mem"
 )
 
 /* second version: bArray is a slice of constant size to which the file.Read adds up */
@@ -67,6 +68,10 @@ func cut(name string, mb *int){
 }
 
 func merge(name, folder string){
+	fmt.Println("[RESOURCES]")
+	fmt.Println("Start Memory:")
+	mem.PrintMemUsage()
+	mem.PrintSliceInfo(nil)
 	nameParts := strings.Split(name, ".")
 	filename := nameParts[len(nameParts) - 2]
 	baseFilename := "./" + folder + "/" + filename
@@ -113,9 +118,14 @@ func merge(name, folder string){
 		}
 		defer file.Close()
 		t += fileSize
+		mem.PrintMemUsage()
+		mem.PrintSliceInfo(bArray)
 	}
 	// store the accumulated bytes into a file
 	err := ioutil.WriteFile(mergedFile, bArray, 0644)
+	fmt.Println("End Memory:")
+	mem.PrintMemUsage()
+	mem.PrintSliceInfo(bArray)
 	if err != nil {
 		fmt.Printf("[ERROR] %v\n", err)
 		os.Exit(1)

@@ -17,6 +17,14 @@ func PrintMemUsage() {
 	fmt.Printf("\tNumGC = %v | %.2f MB,\n", m.NumGC, float64(m.NumGC)*1.049)
 }
 
+func PrintSliceInfo(b []byte){
+	if b != nil {
+		fmt.Printf("Len = %v, Cap = %v,\n", len(b), cap(b))
+	} else {
+		fmt.Println("Len = 0, Cap = 0,")
+	}
+}
+
 func bToMb(b uint64) uint64 {
     return b / 1024 / 1024
 }
