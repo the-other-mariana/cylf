@@ -41,9 +41,10 @@ plt.savefig('factor.png', dpi=500)
 plt.show()
 
 sep = 'Alloc'
+sep2 = 'Len'
 
 files = [ f for f in os.listdir("./") if f.endswith(".txt") ] 
-data = { f.split('.')[0].split('-')[-1]:[] for f in files }
+data = { f.split('.')[0].split('-')[-1]:{sep: [], sep2: []} for f in files }
 print(data, files)
 for f in files:
     print('Processing file:', f)
@@ -65,7 +66,7 @@ for f in files:
                     num = val.strip().replace('MB', '')
                     num = float(num)
                     key = f.split('.')[0].split('-')[-1]
-                    data[key].append(num)
+                    data[key][sep].append(num)
 print(data)
 figs = plt.figure(figsize=(10, 8))
 figs.suptitle(f"Memory Allocation Through Time", fontsize="x-large")
@@ -80,11 +81,11 @@ text_pos = []
 for p in range(2):
     for i in range(len(data.keys())):
         key = list(data.keys())[i]
-        x_vals = list(range(len(data[key])))
+        x_vals = list(range(len(data[key][sep])))
         if p == 0:
             ax = figs.add_subplot(grid[p, i])
             ax.set_title(f"cylf @{key}")
-            ax.plot(x_vals, data[key], marker='o')
+            ax.plot(x_vals, data[key][sep], marker='o')
         if p == 1:
             # altogether plot
             if i == 0:
@@ -93,15 +94,15 @@ for p in range(2):
                 ax_full.set_title(f"Memory Allocation Comparison")
                 ax_full.set_xticks(x_vals)
                 ax_full.set_xticklabels(x_ticks)
-            annot = [f'{d}' for d in data[key]]
-            for x, y in zip(x_vals, data[key]):
+            annot = [f'{d}' for d in data[key][sep]]
+            for x, y in zip(x_vals, data[key][sep]):
                 pt = check_distances(x, y, text_pos)
                 if pt[0]:
                     ax_full.arrow(x, y, pt[1][0]-x, pt[1][1]-y, ec ='black')
                     #print("{0} {1} -> {2} {3}".format(x, y, pt[1][0], pt[1][1]))
                 ax_full.text(pt[1][0], pt[1][1], f'{y}')
                 text_pos.append(pt[1])
-            ax_full.plot(x_vals, data[key], marker='o', label=key)
+            ax_full.plot(x_vals, data[key][sep], marker='o', label=key)
             ax_full.legend()
 
 print(text_pos)
