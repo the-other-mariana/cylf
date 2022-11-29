@@ -42,9 +42,10 @@ plt.show()
 
 sep = 'Alloc'
 sep2 = 'Len'
+sep3 = 'Cap'
 
 files = [ f for f in os.listdir("./") if f.endswith(".txt") ] 
-data = { f.split('.')[0].split('-')[-1]:{sep: [], sep2: []} for f in files }
+data = { f.split('.')[0].split('-')[-1]:{sep: [], sep2: [], sep3: []} for f in files }
 print(data, files)
 for f in files:
     print('Processing file:', f)
@@ -52,7 +53,7 @@ for f in files:
     lines = fopen.readlines()
     for l in lines:
         csv = l.split(',')
-        # select the lines that contain your data
+        # select the lines that contain your data Alloc
         if sep in l:
             # select item in the line parts that has your data
             r = re.compile(f'^({sep}).*')
@@ -67,6 +68,19 @@ for f in files:
                     num = float(num)
                     key = f.split('.')[0].split('-')[-1]
                     data[key][sep].append(num)
+        # select the lines that contain your data Len
+        if sep2 in l:
+            r = re.compile(f'^({sep2}).*')
+            length = list(filter(r.match, csv))
+            r = re.compile(f'^( {sep3}).*')
+            cap = list(filter(r.match, csv))
+            length = int(length[0].split(' = ')[-1])
+            cap = int(cap[0].split(' = ')[-1])
+
+            key = f.split('.')[0].split('-')[-1]
+            data[key][sep2].append(length)
+            data[key][sep3].append(cap)
+
 print(data)
 figs = plt.figure(figsize=(10, 8))
 figs.suptitle(f"Memory Allocation Through Time", fontsize="x-large")
