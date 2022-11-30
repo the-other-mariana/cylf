@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import os
 import re
 import random
+import numpy as np
 
 def check_distances(x, y, text_pos):
     for pt in text_pos:
@@ -122,4 +123,31 @@ for p in range(2):
 print(text_pos)
 figs.tight_layout()
 #plt.savefig('mem-plot.png', dpi=500)
+plt.show()
+
+fig3 = plt.figure(figsize=(12, 3))
+fig3.suptitle(f'Slice Length and Capacity', fontsize="x-large")
+grid = fig3.add_gridspec(1,len(data.keys()))
+
+offset = [-0.5, 0.5]
+width = 0.4
+
+
+for i in range(len(data.keys())):
+    key = list(data.keys())[i]
+    ax3 = fig3.add_subplot(grid[0, i])
+    ax3.set_title(f"cylf @{key}")
+    for k in range(2):
+        subkeys = list(data[key].keys())[k+1]
+        x_vals = list(range(len(data[key][subkeys])))
+        ax3.bar(np.array(x_vals) + (width)*(offset[k]), data[key][subkeys], width=width, label=f'{subkeys}')
+        ax3.set_xticks(x_vals)
+        ax3.set_xticklabels(x_vals)
+
+# python v^3.7
+handles, labels = plt.gca().get_legend_handles_labels()
+by_label = dict(zip(labels, handles))
+plt.legend(by_label.values(), by_label.keys())
+fig3.tight_layout()
+#plt.savefig('factor.png', dpi=500)
 plt.show()
