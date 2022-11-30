@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib import cm # color map
 import os
 import re
 import random
@@ -8,12 +9,12 @@ def check_distances(x, y, text_pos):
     for pt in text_pos:
         dx = abs(pt[0]-x)
         dy = abs(pt[1]-y)
-        if dx < 0.3 and dy < 50 and x > 0.0:
+        if dx < 0.3 and dy < 70 and x > 0.0:
             rnx = random.randint(1, 3)
             rny = random.randint(1, 3)
             print(f'{x},{y} and {pt[0]},{pt[1]} {dx} {dy}')
-            return [True, [x+(-1)**(rnx)*0.2, y + (-1)**(rny)*100]]
-    return[False, [x, y]]
+            return [True, [x+(-1)**(rnx)*0.25, y + (-1)**(rny)*150]]
+    return[False, [x+0.1, y+50]]
 c = 256
 c_old = 256
 limit = 8192
@@ -91,6 +92,14 @@ ax_full = None
 x_ticks = ['Start']
 text_pos = []
 
+cmap = cm.get_cmap("tab10")
+# use a color map
+y1 = np.arange(0,len(data.keys()))
+
+# normalize 0 to 1
+color_n = y1 / max(y1)
+color_n = [cmap(c) for c in color_n]
+
 #ax2 = figs.add_subplot(grid[1, :])
 #ax3 = figs.add_subplot(grid[2, :])
 for p in range(2):
@@ -100,7 +109,7 @@ for p in range(2):
         if p == 0:
             ax = figs.add_subplot(grid[p, i])
             ax.set_title(f"cylf @{key}")
-            ax.plot(x_vals, data[key][sep], marker='o')
+            ax.plot(x_vals, data[key][sep], marker='o', color=color_n[i])
         if p == 1:
             # altogether plot
             if i == 0:
@@ -113,16 +122,16 @@ for p in range(2):
             for x, y in zip(x_vals, data[key][sep]):
                 pt = check_distances(x, y, text_pos)
                 if pt[0]:
-                    ax_full.arrow(x, y, pt[1][0]-x, pt[1][1]-y, ec ='black')
+                    ax_full.arrow(x, y, pt[1][0]-x, pt[1][1]-y, ec ='black', head_width=0.1, head_length=1, zorder=10* i)
                     #print("{0} {1} -> {2} {3}".format(x, y, pt[1][0], pt[1][1]))
-                ax_full.text(pt[1][0], pt[1][1], f'{y}')
+                ax_full.text(pt[1][0], pt[1][1], f'{y}', bbox={'facecolor': color_n[i], 'edgecolor':color_n[i], 'alpha': 1.0, 'pad': 1})
                 text_pos.append(pt[1])
-            ax_full.plot(x_vals, data[key][sep], marker='o', label=key)
+            ax_full.plot(x_vals, data[key][sep], marker='o', label=key, color=color_n[i])
             ax_full.legend()
 
 print(text_pos)
 figs.tight_layout()
-#plt.savefig('mem-plot.png', dpi=500)
+plt.savefig('mem-plot.png', dpi=500)
 plt.show()
 
 fig3 = plt.figure(figsize=(12, 3))
@@ -130,8 +139,15 @@ fig3.suptitle(f'Slice Length and Capacity', fontsize="x-large")
 grid = fig3.add_gridspec(1,len(data.keys()))
 
 offset = [-0.5, 0.5]
-width = 0.4
+width = 0.45
 
+cmap2 = cm.get_cmap("tab20")
+# use a color map
+y2 = np.arange(0,2)
+
+# normalize 0 to 1
+colors = y2 / max(y2)
+colors = [cmap2(c) for c in colors]
 
 for i in range(len(data.keys())):
     key = list(data.keys())[i]
@@ -140,7 +156,12 @@ for i in range(len(data.keys())):
     for k in range(2):
         subkeys = list(data[key].keys())[k+1]
         x_vals = list(range(len(data[key][subkeys])))
-        ax3.bar(np.array(x_vals) + (width)*(offset[k]), data[key][subkeys], width=width, label=f'{subkeys}')
+        xpos = np.array(x_vals) + (width)*(offset[k])
+        ypos = data[key][subkeys]
+        ax3.bar(xpos, ypos, width=width, label=f'{subkeys}', color=colors[k])
+        for x,y in zip(xpos, ypos):
+            if y == 0.0: continue
+            ax3.text(x-0.5, y-y/2, f'{int((y)/1000000)}', rotation=-90, color='black')
         ax3.set_xticks(x_vals)
         ax3.set_xticklabels(x_vals)
 
@@ -149,5 +170,5 @@ handles, labels = plt.gca().get_legend_handles_labels()
 by_label = dict(zip(labels, handles))
 plt.legend(by_label.values(), by_label.keys())
 fig3.tight_layout()
-#plt.savefig('factor.png', dpi=500)
+plt.savefig('len-cap.png', dpi=500)
 plt.show()
